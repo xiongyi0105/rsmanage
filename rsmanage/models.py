@@ -19,5 +19,10 @@ class Resource(models.Model):
         verbose_name = _('资源')
         verbose_name_plural = _('资源池')
 
+        permissions = [
+            ("import","Can import resource pool"),
+            ("export","Can export resource pool"),
+        ]
+
     def __str__(self):
         return self.resource_hostname

@@ -14,8 +14,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers, serializers, viewsets
+from rsmanage.models import Resource
+
+
+class ResourceSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Resource
+        fields = ['resource_hostname', 'resource_ip', 'resource_port', 'resource_password', 'resource_rsa']
+
+
+class ResourceViewSet(viewsets.ModelViewSet):
+    queryset = Resource.objects.all()
+    serializer_class = ResourceSerializer
+
+
+router = routers.DefaultRouter()
+router.register(r'resources', ResourceViewSet)
 
 urlpatterns = [
+    # path('grappelli/', include('grappelli.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
 ]
