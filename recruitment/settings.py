@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # 'grappelli',
+    # 'grappelli',  # pip install django-grappelli
     'simpleui',  # pip install django-simpleui
     'django.contrib.admin',
     'django.contrib.auth',

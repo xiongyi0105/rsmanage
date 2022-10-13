@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers, serializers, viewsets
 from rsmanage.models import Resource
+from rsmanage import views
 
 
 class ResourceSerializer(serializers.HyperlinkedModelSerializer):
@@ -37,5 +38,6 @@ urlpatterns = [
     # path('grappelli/', include('grappelli.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
+    path('admin/rsmanage/update/<int:pk>', views.RsUpdateView.as_view(), name='resmanage-update'),
     path('admin/', admin.site.urls),
 ]
