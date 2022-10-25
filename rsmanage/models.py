@@ -6,6 +6,9 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 class Resource(models.Model):
+    """
+    QA机器资源DB模型
+    """
     resource_hostname = models.CharField(max_length=250, blank=False, verbose_name="主机hostname")
     resource_ip = models.GenericIPAddressField(protocol='both', verbose_name="主机ip")
     resource_port = models.SmallIntegerField(blank=False, default=22, verbose_name="主机port")
@@ -30,3 +33,29 @@ class Resource(models.Model):
 
     def __str__(self):
         return self.resource_hostname
+
+
+class RFConfig(models.Model):
+    """
+    RF使用的orch配置的DB模型
+    """
+    orchestrator_name = models.CharField(max_length=250, blank=False)
+    json_info = models.JSONField(verbose_name="json_info")
+
+    class Meta:
+        verbose_name = _('配置')
+        verbose_name_plural = _('RF使用的Orch配置')
+
+    def __str__(self):
+        return self.orchestrator_name
+
+
+class CaseDisplay(models.Model):
+    """
+    自动化Case展示 DB模型
+    包含 Suite Name, Case Name, Tag Name, Documentation字段
+    """
+    # suite_name =
+    # case_name =
+    # tag_name =
+    # documentation =

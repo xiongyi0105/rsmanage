@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers, serializers, viewsets
-from rsmanage.models import Resource
+from rsmanage.models import Resource, RFConfig
 from rsmanage import views
 
 
@@ -26,18 +26,31 @@ class ResourceSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['resource_hostname', 'resource_ip', 'resource_port', 'resource_password', 'resource_rsa']
 
 
+class RFConfigSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = RFConfig
+        fields = ["json_info"]
+
+
 class ResourceViewSet(viewsets.ModelViewSet):
     queryset = Resource.objects.all()
     serializer_class = ResourceSerializer
 
 
+class RFConfigViewSet(viewsets.ModelViewSet):
+    queryset = RFConfig.objects.all()
+    serializer_class = RFConfigSerializer
+    lookup_field = "orchestrator_name"
+
+
 router = routers.DefaultRouter()
 router.register(r'resources', ResourceViewSet)
+router.register(r'rf_config', RFConfigViewSet)
 
 urlpatterns = [
     # path('grappelli/', include('grappelli.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
-    path('admin/rsmanage/update/<int:pk>', views.RsUpdateView.as_view(), name='resmanage-update'),
+    path('admin/rsmanage/update/', views.bulk_editing, name='resmanage-update'),
     path('admin/', admin.site.urls),
 ]

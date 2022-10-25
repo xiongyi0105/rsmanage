@@ -1,4 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .back {
+            float: right;
+        }
+        form {
+            float: left;
+        }
+    </style>
+</head>
+<body>
 <form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Save">
+    <h4>{{ form.which_to_edit.label }}</h4>
+    {% for one_choice in form.which_to_edit %}
+        {{ one_choice }}
+    {% endfor %}
+    <hr>
+    <br>
+    <table>
+        <tr>
+            <th>{{ form.edit_port.label }}</th>
+            <td>{{ form.edit_port }}</td>
+        </tr>
+        <tr>
+            <th>{{ form.edit_passwd.label }}</th>
+            <td>{{ form.edit_passwd }}</td>
+        </tr>
+        <tr>
+            <th>{{ form.edit_rsa.label }}</th>
+            <td>{{ form.edit_rsa }}</td>
+        </tr>
+        <tr>
+            <th></th>
+            <td><input type="submit" value="提交"></td>
+        </tr>
+    </table>
 </form>
+<button class="back" onclick="location.href='/admin/rsmanage/resource/'">返回</button>
+</body>
+</html>

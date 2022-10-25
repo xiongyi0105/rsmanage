@@ -1,0 +1,15 @@
+{% extends 'admin/change_form.html' %}
+
+{% block field_sets %}
+    <div>
+    {{ rfconfig }}
+    </div>
+
+{% endblock %}
+{% block admin_change_form_document_ready %}
+{{ block.super }}
+    <script type="text/javascript">
+        let data = document.getElementById("id_json_info");
+        $('#id_json_info').text(JSON.stringify(JSON.parse(data.textContent), null, "\t"));
+    </script>
+{% endblock %}
